@@ -1,4 +1,5 @@
-EPSS.py
+**EPSS.py**
+
 This Python script utilizes asyncio and aiohttp to fetch data asynchronously from an API based on Common Vulnerabilities and Exposures (CVE) identifiers. It then merges this data with an input CSV file and exports the merged data to another CSV file. Let's break down the script:
 
 Async Functions:
@@ -25,7 +26,8 @@ The script prints a message indicating the successful export of the merged data 
 Overall, this script provides a streamlined way to fetch and merge CVE data from an API with existing data in a CSV file, leveraging asynchronous programming for efficient HTTP requests and Pandas for data manipulation and export.
 
 
-EPSSV2.py
+**EPSSV2.py**
+
 This script automates the installation of required libraries if they are not already installed. It then proceeds to fetch data from a specified API for a list of Common Vulnerabilities and Exposures (CVE) identifiers, merging this data with an input CSV file and exporting the merged data to a new CSV file. Below is a breakdown of its functionalities:
 
 Library Installation:
