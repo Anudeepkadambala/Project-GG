@@ -1,3 +1,4 @@
+
 **EPSS.py**
 
 This Python script utilizes asyncio and aiohttp to fetch data asynchronously from an API based on Common Vulnerabilities and Exposures (CVE) identifiers. It then merges this data with an input CSV file and exports the merged data to another CSV file. Let's break down the script:
@@ -50,3 +51,4 @@ Error Handling:
 
 The script includes exception handling to catch and print any errors that occur during execution.
 This script provides a convenient way to fetch and merge CVE data from an API with existing data in a CSV file, automating the process and making it suitable for use in various data processing pipelines.
+
