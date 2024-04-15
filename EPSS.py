@@ -49,7 +49,7 @@ if __name__ == "__main__":
     base_url = 'https://api.first.org/data/v1/epss?cve='
 
     # Give input file path and then sit and relax
-    input_file = input("Enter input CSV file path: ")
+    input_file = input("Enter input CSV file path now: ")
 
     # here name the file of your wish with .csv , Thank you for your patience
     output_file = input("Enter output CSV file name (with extension): ")
