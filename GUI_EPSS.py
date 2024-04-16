@@ -57,7 +57,7 @@ async def call_api_with_cve_and_merge(base_url, input_file, output_file, status_
         
         cve_data.to_csv(output_file, index=False)
 
-        status_label.config(text="Done And Dusted : " + output_file, fg="White")
+        status_label.config(text="Saved In : " + output_file, fg="White")
     except Exception as e:
         status_label.config(text="Error: " + str(e), fg="red")
 
@@ -107,7 +107,7 @@ def run_script_with_gui():
 
   
     window = tk.Tk()
-    window.title("CVE to EPSS API")
+    window.title("GG EPSS APP")
     window.configure(bg="#004578")
 
     bg_canvas = tk.Canvas(window, width=800, height=300, bg="#085899", highlightthickness=0)
