@@ -99,12 +99,18 @@ def run_script_with_gui():
         start_button.place(relx=0.5, rely=0.7, anchor="center")
         status_label.place(relx=0.5, rely=0.85, anchor="center")
 
-    
+    def on_enter(event):
+        event.widget.config(bg="#145A32")
+
+    def on_leave(event):
+        event.widget.config(bg="#4CAF50")
+
+    # Create GUI
     window = tk.Tk()
     window.title("CVE to EPSS API")
     window.configure(bg="#004578")
 
-
+    # Add gradient background
     bg_canvas = tk.Canvas(window, width=800, height=300, bg="#085899", highlightthickness=0)
     bg_canvas.grid(row=0, column=0, columnspan=3)
     bg_canvas.create_rectangle(0, 0, 800, 300, fill="#004578", outline="")
@@ -115,8 +121,10 @@ def run_script_with_gui():
     input_file_label.pack(side=tk.LEFT, padx=10, pady=5)
     input_file_entry = tk.Entry(input_frame, width=50, bg="#ffffff", bd=1, relief="solid", font=("Helvetica", 10))
     input_file_entry.pack(side=tk.LEFT, padx=5, pady=5)
-    input_file_button = tk.Button(input_frame, text="Browse", command=browse_input_file, bg="#004578", fg="white", font=("Helvetica", 10))
+    input_file_button = tk.Button(input_frame, text="Browse", command=browse_input_file, bg="#4CAF50", fg="white", font=("Helvetica", 10))
     input_file_button.pack(side=tk.LEFT, padx=5, pady=5)
+    input_file_button.bind("<Enter>", on_enter)
+    input_file_button.bind("<Leave>", on_leave)
 
     output_frame = tk.Frame(window, bg="#004578")
     output_frame.place(relx=0.5, rely=0.5, anchor="center")
@@ -124,16 +132,20 @@ def run_script_with_gui():
     output_file_label.pack(side=tk.LEFT, padx=10, pady=5)
     output_file_entry = tk.Entry(output_frame, width=50, bg="#ffffff", bd=1, relief="solid", font=("Helvetica", 10))
     output_file_entry.pack(side=tk.LEFT, padx=5, pady=5)
-    output_file_button = tk.Button(output_frame, text="Browse", command=browse_output_file, bg="#004578", fg="white", font=("Helvetica", 10))
+    output_file_button = tk.Button(output_frame, text="Browse", command=browse_output_file, bg="#4CAF50", fg="white", font=("Helvetica", 10))
     output_file_button.pack(side=tk.LEFT, padx=5, pady=5)
+    output_file_button.bind("<Enter>", on_enter)
+    output_file_button.bind("<Leave>", on_leave)
 
-    start_button = tk.Button(window, text="Start Processing", command=start_processing, bg="#4CAF50", fg="white", font=("Helvetica", 12))
+    start_button = tk.Button(window, text="Start Processing", command=start_processing, bg="#4CAF50", fg="Black", font=("Helvetica", 12))
     start_button.place(relx=0.5, rely=0.7, anchor="center")
+    start_button.bind("<Enter>", on_enter)
+    start_button.bind("<Leave>", on_leave)
 
     status_label = tk.Label(window, text="", fg="black", bg="#004578", font=("Helvetica", 12))
     status_label.place(relx=0.5, rely=0.85, anchor="center")
 
-
+    # Center the window
     window.update_idletasks()
     screen_width = window.winfo_screenwidth()
     screen_height = window.winfo_screenheight()
