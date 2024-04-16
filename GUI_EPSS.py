@@ -99,12 +99,12 @@ def run_script_with_gui():
         start_button.place(relx=0.5, rely=0.7, anchor="center")
         status_label.place(relx=0.5, rely=0.85, anchor="center")
 
-    # Create GUI
+    
     window = tk.Tk()
     window.title("CVE to EPSS API")
     window.configure(bg="#004578")
 
-    # Add gradient background
+
     bg_canvas = tk.Canvas(window, width=800, height=300, bg="#085899", highlightthickness=0)
     bg_canvas.grid(row=0, column=0, columnspan=3)
     bg_canvas.create_rectangle(0, 0, 800, 300, fill="#004578", outline="")
@@ -133,7 +133,7 @@ def run_script_with_gui():
     status_label = tk.Label(window, text="", fg="black", bg="#085899", font=("Helvetica", 12))
     status_label.place(relx=0.5, rely=0.85, anchor="center")
 
-    # Center the window
+
     window.update_idletasks()
     screen_width = window.winfo_screenwidth()
     screen_height = window.winfo_screenheight()
