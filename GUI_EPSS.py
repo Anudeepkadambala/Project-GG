@@ -57,7 +57,7 @@ async def call_api_with_cve_and_merge(base_url, input_file, output_file, status_
         
         cve_data.to_csv(output_file, index=False)
 
-        status_label.config(text="EPSS score added, please check the below path: " + output_file, fg="White")
+        status_label.config(text="Saved in : " + output_file, fg="White")
     except Exception as e:
         status_label.config(text="Error: " + str(e), fg="red")
 
