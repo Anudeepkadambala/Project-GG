@@ -31,7 +31,7 @@ async def fetch(session, base_url, cve):
 
 async def call_api_with_cve_and_merge(base_url, input_file, output_file, status_label):
     try:
-        # Read CVE values from the input CSV file
+       
         cve_data = pd.read_csv(input_file)
         cve_values = cve_data['CVE'].astype(str).tolist()
 
@@ -44,17 +44,17 @@ async def call_api_with_cve_and_merge(base_url, input_file, output_file, status_
                 if result:
                     results[cve] = result['data']
 
-        # Merge data from API response into the DataFrame
+        
         for key in results:
             data = results[key]
             for item in data:
                 for k, v in item.items():
                     cve_data.loc[cve_data['CVE'] == key, f"{k}"] = v
 
-        # Drop unnecessary column
+        
         cve_data.drop(columns=['cve'], inplace=True)
 
-        # Save merged data to output CSV file
+        
         cve_data.to_csv(output_file, index=False)
 
         status_label.config(text="Done And Dusted : " + output_file, fg="White")
@@ -89,7 +89,7 @@ def run_script_with_gui():
         asyncio.run(call_api_with_cve_and_merge(base_url, input_file, output_file, status_label))
 
     def on_resize(event):
-        # Update positions of widgets when the window is resized
+        
         window.update_idletasks()
         window_width = window.winfo_width()
         window_height = window.winfo_height()
@@ -105,12 +105,11 @@ def run_script_with_gui():
     def on_leave(event):
         event.widget.config(bg="#4CAF50")
 
-    # Create GUI
+  
     window = tk.Tk()
     window.title("CVE to EPSS API")
     window.configure(bg="#004578")
 
-    # Add gradient background
     bg_canvas = tk.Canvas(window, width=800, height=300, bg="#085899", highlightthickness=0)
     bg_canvas.grid(row=0, column=0, columnspan=3)
     bg_canvas.create_rectangle(0, 0, 800, 300, fill="#004578", outline="")
@@ -145,7 +144,7 @@ def run_script_with_gui():
     status_label = tk.Label(window, text="", fg="black", bg="#004578", font=("Helvetica", 12))
     status_label.place(relx=0.5, rely=0.85, anchor="center")
 
-    # Center the window
+   
     window.update_idletasks()
     screen_width = window.winfo_screenwidth()
     screen_height = window.winfo_screenheight()
