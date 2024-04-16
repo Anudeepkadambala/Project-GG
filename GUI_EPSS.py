@@ -57,7 +57,7 @@ async def call_api_with_cve_and_merge(base_url, input_file, output_file, status_
         
         cve_data.to_csv(output_file, index=False)
 
-        status_label.config(text="Done And Dusted : " + output_file, fg="White")
+        status_label.config(text="EPSS score added, please check the below path: " + output_file, fg="White")
     except Exception as e:
         status_label.config(text="Error: " + str(e), fg="red")
 
@@ -107,7 +107,7 @@ def run_script_with_gui():
 
   
     window = tk.Tk()
-    window.title("CVE to EPSS API")
+    window.title("GG Epss App")
     window.configure(bg="#004578")
 
     bg_canvas = tk.Canvas(window, width=800, height=300, bg="#085899", highlightthickness=0)
@@ -116,7 +116,7 @@ def run_script_with_gui():
 
     input_frame = tk.Frame(window, bg="#004578")
     input_frame.place(relx=0.5, rely=0.3, anchor="center")
-    input_file_label = tk.Label(input_frame, text="Input CSV File:", bg="#004578", fg="white", font=("Helvetica", 12))
+    input_file_label = tk.Label(input_frame, text="Input CSV File to add EPSS score:", bg="#004578", fg="white", font=("Helvetica", 12))
     input_file_label.pack(side=tk.LEFT, padx=10, pady=5)
     input_file_entry = tk.Entry(input_frame, width=50, bg="#ffffff", bd=1, relief="solid", font=("Helvetica", 10))
     input_file_entry.pack(side=tk.LEFT, padx=5, pady=5)
