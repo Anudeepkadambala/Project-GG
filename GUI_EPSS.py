@@ -130,7 +130,7 @@ def run_script_with_gui():
     start_button = tk.Button(window, text="Start Processing", command=start_processing, bg="#4CAF50", fg="white", font=("Helvetica", 12))
     start_button.place(relx=0.5, rely=0.7, anchor="center")
 
-    status_label = tk.Label(window, text="", fg="black", bg="#085899", font=("Helvetica", 12))
+    status_label = tk.Label(window, text="", fg="black", bg="#004578", font=("Helvetica", 12))
     status_label.place(relx=0.5, rely=0.85, anchor="center")
 
 
