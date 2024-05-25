@@ -18,7 +18,7 @@ for package in required_packages:
         install(package)
 
 def run_shodan_search():
-    SHODAN_API_KEY = "2bkjIJvPmBailFOwRqvbrNjSGp1cRtG9"
+    SHODAN_API_KEY = "<ADD your API>"
     api = shodan.Shodan(SHODAN_API_KEY)
 
     search_query = search_entry.get()
