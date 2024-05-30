@@ -1,6 +1,10 @@
 import subprocess
 import sys
 import os
+import tkinter as tk
+from tkinter import filedialog, messagebox
+import shodan
+import pandas as pd
 
 def install(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
@@ -13,58 +17,96 @@ for package in required_packages:
     except ImportError:
         install(package)
 
-import shodan
-import pandas as pd
+def run_shodan_search():
+    SHODAN_API_KEY = "Insert Your API key"
+    api = shodan.Shodan(SHODAN_API_KEY)
 
-SHODAN_API_KEY = "<Insert your Shodan API key>"
-api = shodan.Shodan(SHODAN_API_KEY)
+    search_query = search_entry.get()
+    output_file = output_entry.get()
 
-search_query = input("Enter the search query for Shodan: ")
-output_file = input("Enter the output CSV file name (with .csv extension): ")
+    if not output_file.endswith('.csv'):
+        output_file += '.csv'
 
-if not output_file.endswith('.csv'):
-    output_file += '.csv'
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    output_file_path = os.path.join(current_dir, output_file)
 
+    try:
+        results = api.search(search_query)
+        
+        if not results['matches']:
+            messagebox.showinfo("No Results", "No results found for the given search query.")
+            return
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-output_file_path = os.path.join(current_dir, output_file)
+        data = []
+        for result in results['matches']:
+            item = {
+                'IP': result.get('ip_str', ''),
+                'Port': result.get('port', ''),
+                'Hostnames': result.get('hostnames', []),
+                'Location': result.get('location', {}),
+                'ISP': result.get('isp', ''),
+                'Organization': result.get('org', ''),
+                'Operating System': result.get('os', ''),
+                'Timestamp': result.get('timestamp', ''),
+                'Data': result.get('data', '')
+            }
+            data.append(item)
 
-try:
+        df = pd.DataFrame(data)
 
-    results = api.search(search_query)
-    
- 
-    if not results['matches']:
-        print("No results found for the given search query.")
-        sys.exit()
+        if not df.empty:
+            location_df = pd.json_normalize(df['Location'])
+            df = pd.concat([df.drop(columns='Location'), location_df], axis=1)
 
-    
-    data = []
-    for result in results['matches']:
-        item = {
-            'IP': result.get('ip_str', ''),
-            'Port': result.get('port', ''),
-            'Hostnames': result.get('hostnames', []),
-            'Location': result.get('location', {}),
-            'ISP': result.get('isp', ''),
-            'Organization': result.get('org', ''),
-            'Operating System': result.get('os', ''),
-            'Timestamp': result.get('timestamp', ''),
-            'Data': result.get('data', '')
-        }
-        data.append(item)
+        df.to_csv(output_file_path, index=False)
+        messagebox.showinfo("Success", f"Data successfully exported to {output_file_path}")
 
-    
-    df = pd.DataFrame(data)
+    except shodan.APIError as e:
+        messagebox.showerror("API Error", f"Error: {e}")
 
-    
-    if not df.empty:
-        location_df = pd.json_normalize(df['Location'])
-        df = pd.concat([df.drop(columns='Location'), location_df], axis=1)
+# Create the main window
+root = tk.Tk()
+root.title("Shodan Search Tool")
+root.configure(bg="#004578")  # Set the background color
 
-    
-    df.to_csv(output_file_path, index=False)
-    print(f"Data successfully exported to {output_file_path}")
+# Configure grid to center-align widgets
+root.columnconfigure(0, weight=1)
+root.columnconfigure(1, weight=1)
+root.rowconfigure(0, weight=1)
+root.rowconfigure(1, weight=1)
+root.rowconfigure(2, weight=1)
+root.rowconfigure(3, weight=1)
 
-except shodan.APIError as e:
-    print(f"Error: {e}")
+# Hover effect for the search button
+def on_enter(e):
+    search_button.config(background='green')
+
+def on_leave(e):
+    search_button.config(background='SystemButtonFace')
+
+# Create and place the widgets
+tk.Label(root, text="Enter the search query for Shodan:", bg="#004578", fg="white").grid(row=0, column=0, padx=10, pady=5, sticky='e')
+search_entry = tk.Entry(root, width=50)
+search_entry.grid(row=0, column=1, padx=10, pady=5, sticky='w')
+
+tk.Label(root, text="Enter the output CSV file name (with .csv extension):", bg="#004578", fg="white").grid(row=1, column=0, padx=10, pady=5, sticky='e')
+output_entry = tk.Entry(root, width=50)
+output_entry.grid(row=1, column=1, padx=10, pady=5, sticky='w')
+
+search_button = tk.Button(root, text="Search", command=run_shodan_search)
+search_button.grid(row=2, column=0, columnspan=2, pady=10)
+
+# Add hover effect
+search_button.bind("<Enter>", on_enter)
+search_button.bind("<Leave>", on_leave)
+
+# Adjust padding to reduce space
+for widget in root.winfo_children():
+    widget.grid_configure(padx=5, pady=5)
+
+# Center-align the button
+root.grid_rowconfigure(2, weight=1)
+search_button.grid(row=2, column=0, columnspan=2)
+
+# Run the application
+root.mainloop()
