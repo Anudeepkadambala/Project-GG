@@ -16,7 +16,7 @@ for package in required_packages:
 import shodan
 import pandas as pd
 
-SHODAN_API_KEY = "2bkjIJvPmBailFOwRqvbrNjSGp1cRtG9"
+SHODAN_API_KEY = "<Insert your Shodan API key>"
 api = shodan.Shodan(SHODAN_API_KEY)
 
 search_query = input("Enter the search query for Shodan: ")
