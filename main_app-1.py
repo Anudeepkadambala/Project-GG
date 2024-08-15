@@ -514,7 +514,7 @@ class MainWindow(QMainWindow):
 
         self.setStyleSheet("background-color: #000000;")  # Set the main window background to black
 
-        self.title_label = QLabel("Sophos Managed Risk", self)
+        self.title_label = QLabel("Hello Guys!!", self)
         self.title_label.setAlignment(Qt.AlignCenter)
         self.title_label.setFont(QFont('Arial', 24, QFont.Bold))
         self.title_label.setStyleSheet("color: #E0E0E0;")
